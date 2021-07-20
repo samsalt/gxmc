@@ -1,0 +1,32 @@
+# model file name
+etest.exo
+# time duration
+0.01
+# time step size
+1e-4
+# time output period
+1e-4
+# material property
+1
+1
+1200 10e9 0.373e6 -0.031e6 0.005e6
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+# block set initial velocity
+1
+-0.1 0 0
+# node set boundary condition
+1
+1 1 1
+
+## LagrangianType
+0
+
+
+## rk information
+1 1.2
+
+# output list
+all
+

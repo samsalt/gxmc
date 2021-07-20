@@ -1,0 +1,10 @@
+reset
+create Cylinder height 0.02346 radius 0.00391 
+move Volume 1 z 0.01173 include_merged 
+volume 1  size auto factor 5
+mesh volume 1 
+nodeset 1 surface 2  
+undo group begin
+set large exodus file off
+export mesh "//wsl$/Ubuntu-18.04/home/yangsalt/gxc2/taylorBar.exo" overwrite
+undo group end

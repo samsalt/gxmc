@@ -1,0 +1,73 @@
+// for debug
+
+    gxcData gpi {3.1415926};
+    gxcData Dlt=SimulationParameter.Dlt;
+
+    gxcData rv;
+    gxcData PX, PY;
+    rv = 4*gpi;
+
+    for (int i = 0; i < SimulationParameter.np; i++)
+    {
+      Node[i].Velocity[0]=-rv*(Model.Vertex[i][1]+Node[i].Displacement[1]);
+      Node[i].Velocity[1]=rv*(Model.Vertex[i][0]+Node[i].Displacement[0]);
+      Node[i].DisplacementIncrement[0]=Dlt * Node[i].Velocity[0];
+      Node[i].DisplacementIncrement[1]=Dlt * Node[i].Velocity[1];
+      Node[i].Displacement[0] +=Node[i].DisplacementIncrement[0];
+      Node[i].Displacement[1] +=Node[i].DisplacementIncrement[1];
+    }
+
+
+
+
+    
+
+void gxcCell::showF(std::vector<gxcNode> &Node, const gxcBlockInfo &BlockInfo)
+{
+    using namespace boost::numeric::ublas;
+
+    zero_matrix<gxcData> zero_m(3, 3);
+    identity_matrix<gxcData> i_m(3);
+    matrix<gxcData> H(3, 3), HTrans(3, 3), DisplacementLocal(3, NodeNum), GreenStrain(3, 3),  SPK(3, 3), NominalStress(3, 3), DeformationGradient(3, 3), TotalShapeDxLocal(NodeNum,3),CauchyStressMat(3,3),StressVoigt(6,1),StrainVoigt(6,1);
+    H = zero_m;
+
+    GetLocalDisplacement(Node, DisplacementLocal);
+    GetLocalTotalShapeDx(NodeNum,TotalShapeDxLocal);
+    
+    H = prod(DisplacementLocal, TotalShapeDxLocal);
+    DeformationGradient = i_m + H;
+    gxcData LocalJacobian;
+    LocalJacobian=determinant_3_boost(DeformationGradient);
+    HTrans = trans(H);
+    GreenStrain = 0.5 * (H + HTrans + prod(HTrans, H));
+
+    EchoVar("DeformationGradient",DeformationGradient);
+    EchoVar("DisplacementLocal",DisplacementLocal);
+    EchoVar("H",H);
+    EchoVar("TotalShapeDxLocal",TotalShapeDxLocal);
+    EchoVar("NeighborNode",NeighborNode);
+
+        // ! for debug
+
+      ofstream myfile ("debugout.txt");
+  if (myfile.is_open())
+  {
+    for (int i = 0; i < 2; i++)
+    {
+      myfile<<std::endl;
+      myfile<<"displacement"<<std::endl;
+
+      for (int j = 0; j < 8; j++)
+        myfile << DisplacementLocal(i,j)<< " ";
+    }
+    myfile<<std::endl;
+    myfile<<"node id"<<std::endl;
+      for (int j = 0; j < 8; j++)
+        myfile << NeighborNode[j]<< " ";
+
+    // myfile<<std::endl;
+    // myfile<<"node id"<<std::endl;
+    //   for (int j = 0; j < 8; j++)
+    //     myfile << DisplacementLocal(i,j)<< " ";
+    myfile.close();
+  }

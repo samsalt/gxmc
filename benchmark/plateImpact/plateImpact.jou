@@ -1,0 +1,6 @@
+reset
+brick x 0.03 y 0.00015 z 0.00015
+volume 1 size 0.00015
+mesh volume 1
+nodeset 1 volume 1 
+export Lsdyna CUsersSaili YangsourcereposmegamegaplateImpact.k overwrite 

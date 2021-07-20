@@ -1,0 +1,14 @@
+reset
+brick x 1 y 5 z 5
+move Volume 1 x -2.6 include_merged 
+create sphere radius 2 
+volume 1 size 1
+mesh volume 1
+volume 2  size 1
+mesh volume 2
+nodeset 1 surface 4  
+nodeset 2 surface 7  
+Sideset 1 surface 6  
+undo group begin
+set large exodus file off
+export mesh "//wsl$/Ubuntu-18.04/home/yangsalt/gxc2/sphereWallImpact.exo" overwrite

@@ -1,0 +1,8 @@
+reset
+brick x 0.00782 y 0.02346 z 0.000782
+move Volume 1 y 0.01173 include_merged 
+volume 1 size 0.000782
+mesh volume 1
+nodeset 1 volume 1  
+nodeset 2 surface 3  
+export mesh "//wsl$/Ubuntu-18.04/home/yangsalt/gxc2/taylor2d.exo" overwrite

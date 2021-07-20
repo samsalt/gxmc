@@ -1,0 +1,52 @@
+# model file name
+sphereWallImpact.exo
+# time duration
+1
+# time step size
+1e-4
+# time output period
+1e-2
+# material property
+1
+1
+100 1e6 0.2 -0.031e6 0.005e6
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+# material property
+2
+1
+100 1e6 0.2 -0.031e6 0.005e6
+0 0 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+# block set initial velocity
+2
+-4 0 0
+
+# essential boundary condition
+1
+1 1 1
+
+## natural boundary condition
+1
+
+# contact nodeset
+2
+
+# target faceset
+1
+
+# LagrangianType
+1
+
+# thread number
+4
+
+
+## rk information
+1 1.2
+
+# output list
+all
+

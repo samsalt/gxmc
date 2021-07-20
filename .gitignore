@@ -1,0 +1,12 @@
+build/*
+build/
+bin/
+bin/*
+*.vtu
+.vscode/*
+.vscode/
+/*.exo
+debug.dat
+gmon.out
+analysis.txt
+gxmc.log
